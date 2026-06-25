@@ -324,7 +324,7 @@ end
 
 module Make_BLAKE2 (F : Foreign_BLAKE2) (D : Desc) = struct
   let () =
-    if D.digest_size > F.max_outlen ()
+    if D.digest_size < 1 || D.digest_size > F.max_outlen ()
     then
       failwith "Invalid digest_size:%d to make a BLAKE2{S,B} implementation"
         D.digest_size
