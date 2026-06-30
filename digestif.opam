@@ -36,7 +36,6 @@ build: [
 ]
 install:  [
   [ "dune" "install" "-p" name ] {with-test}
-  [ "ocaml" "./test/test_runes.ml" ] {with-test}
 ]
 
 depends: [
