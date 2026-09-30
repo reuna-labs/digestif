@@ -386,3 +386,15 @@ caml_digestif_shake_st_out
     _st_uint8_off (dst, off), (size_t) Long_val (len));
   return Val_unit;
 }
+
+/* Raw permutation uses an aligned, wiped temporary inside sha3.c. No
+ * allocation or runtime-lock release while the OCaml buffer is borrowed. */
+#include "sha3.h"
+#include <caml/fail.h>
+CAMLprim value caml_digestif_keccak_f1600(value state)
+{
+    if (caml_string_length(state) != 200)
+        caml_invalid_argument("Digestif_keccak_f1600.permute: expected 200 bytes");
+    digestif_sha3_permute((uint8_t *) Bytes_val(state));
+    return Val_unit;
+}

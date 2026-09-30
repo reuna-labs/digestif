@@ -1,0 +1,1 @@
+(test (name test_keccak_f1600) (package digestif) (libraries digestif.keccak-f1600))

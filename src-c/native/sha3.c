@@ -1,6 +1,7 @@
 /*  Copyright (c) 2015 Markku-Juhani O. Saarinen */
 
 #include "sha3.h"
+#include <string.h>
 
 #ifndef KECCAKF_ROUNDS
 #define KECCAKF_ROUNDS 24
@@ -189,4 +190,17 @@ void digestif_sha3_finalize(struct sha3_ctx *ctx, uint8_t *md, uint8_t padding)
     }
 
     return;
+}
+
+/* Raw Keccak-f[1600] for duplex protocols such as STROBE. The external
+ * state is 200 bytes in little-endian lane order, with no padding applied.
+ * sha3_keccakf already performs the host-endian conversion when necessary. */
+void digestif_sha3_permute(uint8_t state[200])
+{
+    uint64_t aligned[25];
+    memcpy(aligned, state, sizeof aligned);
+    sha3_keccakf(aligned);
+    memcpy(state, aligned, sizeof aligned);
+    volatile unsigned char *p = (volatile unsigned char *) aligned;
+    for (size_t i = 0; i < sizeof aligned; i++) p[i] = 0;
 }

@@ -28,4 +28,7 @@ void digestif_sha3_finalize(struct sha3_ctx *ctx, uint8_t *out, uint8_t padding)
 void digestif_sha3_xof(struct sha3_ctx *ctx, uint8_t padding);
 void digestif_sha3_out(struct sha3_ctx *ctx, uint8_t *out, size_t len);
 
+/* In-place permutation; exactly 200 bytes, no sponge padding. */
+void digestif_sha3_permute(uint8_t state[200]);
+
 #endif

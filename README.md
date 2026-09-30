@@ -117,3 +117,11 @@ reasons:
   * delete the dependancy with `nocrypto` if you don't use the encryption (and
     common) part
   * aggregate all hashes functions in one library
+
+### Raw Keccak permutation (Reuna)
+
+The optional `digestif.keccak-f1600` sublibrary exposes
+`Digestif_keccak_f1600.permute : bytes -> unit`. It reuses the C backend's
+24-round permutation on a 200-byte state in little-endian lane order, without
+applying sponge padding. This supports duplex protocols such as STROBE and
+selects the C implementation of Digestif.

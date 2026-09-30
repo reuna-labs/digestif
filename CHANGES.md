@@ -1,3 +1,8 @@
+## Unreleased (Reuna)
+
+- Add digestif.keccak-f1600: an in-place, 200-byte raw permutation API
+  reusing the C SHA-3 kernel for duplex protocols.
+
 ### v1.4.0 (unreleased)
 
 - Add `KECCAK_224`, `KECCAK_384` and `KECCAK_512` -- the pre-FIPS-202 Keccak

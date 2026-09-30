@@ -1,0 +1,4 @@
+(library
+ (name digestif_keccak_f1600)
+ (public_name digestif.keccak-f1600)
+ (libraries digestif.c))
