@@ -125,3 +125,18 @@ The optional `digestif.keccak-f1600` sublibrary exposes
 24-round permutation on a 200-byte state in little-endian lane order, without
 applying sponge padding. This supports duplex protocols such as STROBE and
 selects the C implementation of Digestif.
+
+### Native SHA512 consumers (Reuna fork)
+
+The C backend installs `digestif_sha512.h` in the `digestif` include directory.
+C stubs may include it via Dune `(include_dirs (lib digestif))` and must link
+`digestif.c` from the **same pinned source revision**. The header is also
+available in a source/duniverse build. This exposes the existing kernel;
+consumers must not vendor or link another copy of `sha512.c`.
+
+The context layout is version-coupled, not a stable cross-release C ABI.
+`digestif_sha512_update` takes a uint32 byte count: larger inputs must be
+chunked without truncation. This interface is deterministic and requires no
+RNG, host I/O or allocator. It is used by the Cardano Ed25519-BIP32/Icarus
+backend so that SHA512 and its code size are shared with ordinary Digestif
+consumers.

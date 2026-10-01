@@ -6,3 +6,9 @@
  (virtual_modules digestif)
  (default_implementation digestif.c)
  (libraries eqaf))
+
+; Also expose the installed C header when Digestif is built in a duniverse.
+(rule
+ (targets digestif_sha512.h)
+ (deps ../src-c/native/sha512.h)
+ (action (copy %{deps} %{targets})))

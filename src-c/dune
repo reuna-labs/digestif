@@ -17,3 +17,7 @@
 (include_subdirs unqualified)
 
 (copy_files# ../src/*.ml)
+
+; C consumers link digestif.c and use this header from the same pinned release.
+(install (section lib) (package digestif)
+ (files (native/sha512.h as digestif_sha512.h)))
