@@ -136,7 +136,10 @@ consumers must not vendor or link another copy of `sha512.c`.
 
 The context layout is version-coupled, not a stable cross-release C ABI.
 `digestif_sha512_update` takes a uint32 byte count: larger inputs must be
-chunked without truncation. This interface is deterministic and requires no
+chunked without truncation. The kernel reads and writes uint64 words: native
+callers must supply suitable alignment, including after completing a partial
+context block. The Cardano adapter uses aligned input/output scratch buffers
+and wipes them after use. This interface is deterministic and requires no
 RNG, host I/O or allocator. It is used by the Cardano Ed25519-BIP32/Icarus
 backend so that SHA512 and its code size are shared with ordinary Digestif
 consumers.
