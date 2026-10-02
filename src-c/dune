@@ -20,4 +20,6 @@
 
 ; C consumers link digestif.c and use this header from the same pinned release.
 (install (section lib) (package digestif)
- (files (native/sha512.h as digestif_sha512.h)))
+ (files (native/sha1.h as digestif_sha1.h)
+        (native/sha256.h as digestif_sha256.h)
+        (native/sha512.h as digestif_sha512.h)))

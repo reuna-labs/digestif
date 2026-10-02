@@ -12,3 +12,13 @@
  (targets digestif_sha512.h)
  (deps ../src-c/native/sha512.h)
  (action (copy %{deps} %{targets})))
+
+(rule
+ (targets digestif_sha1.h)
+ (deps ../src-c/native/sha1.h)
+ (action (copy %{deps} %{targets})))
+
+(rule
+ (targets digestif_sha256.h)
+ (deps ../src-c/native/sha256.h)
+ (action (copy %{deps} %{targets})))
