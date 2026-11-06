@@ -3,7 +3,7 @@
 - Add digestif.keccak-f1600: an in-place, 200-byte raw permutation API
   reusing the C SHA-3 kernel for duplex protocols.
 
-### v1.4.0 (unreleased)
+### Reuna additions carried on top of upstream (labelled "v1.4.0 (unreleased)" before upstream released its own v1.4.0)
 
 - Add `KECCAK_224`, `KECCAK_384` and `KECCAK_512` -- the pre-FIPS-202 Keccak
   padding at the remaining digest sizes, alongside the existing `KECCAK_256`
@@ -24,6 +24,20 @@
   Note: the pure-OCaml backend (`digestif.ocaml`) additions are hand-written
   and have not been audited for constant-time behaviour; they are validated
   against test vectors only.  `digestif.c` remains the default implementation.
+
+### v1.4.1 2026-10-16 Nantes (France)
+
+- Fix the support of `ocaml-solo5`/Solo5 and Unikraft (@edwintorok, @dinosaure, @hannesm, #184, #185)
+
+### v1.4.0 2026-10-15 Nantes (France)
+
+- Prefer to use `typedef` internally when it's about C structs (@dinosaure, #174)
+- Use `Int32.unsigned_compare` instead of `Int32.compare` (@dinosaure, #175, #176)
+- Fix overflow on our `xor` OCaml implementation (@dinosaure, #177)
+- Do bounds checking on our `xor` C/OCaml implementation (@dinosaure, #178, #179)
+- Provide BLAKE2 implementation (@dinosaure, @thevilledev, #180)
+- Optimize OCaml implementations of hash algorithms and unbox when we manipulate int32 values (@Zaneham, @dinosaure, #181)
+- Expose Keyed version of `Make_BLAKE2{S,B}` (spotted by @copy, @dinosaure, #173, #182)
 
 ### v1.3.1 2026-07-14 Paris (France)
 

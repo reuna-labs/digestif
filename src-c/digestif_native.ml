@@ -677,6 +677,47 @@ module BLAKE2S = struct
   [@@noalloc]
 end
 
+module BLAKE3 = struct
+  type kind = [ `BLAKE3 ]
+
+  module Bigstring = struct
+    external init : ctx -> unit = "caml_digestif_blake3_ba_init" [@@noalloc]
+
+    external update : ctx -> ba -> off -> size -> unit
+      = "caml_digestif_blake3_ba_update"
+
+    external finalize : ctx -> ba -> off -> unit
+      = "caml_digestif_blake3_ba_finalize"
+    [@@noalloc]
+  end
+
+  module Bytes = struct
+    external init : ctx -> unit = "caml_digestif_blake3_st_init" [@@noalloc]
+
+    external init_keyed : ctx -> st -> off -> unit
+      = "caml_digestif_blake3_st_init_keyed"
+    [@@noalloc]
+
+    external init_derive_key : ctx -> st -> off -> size -> unit
+      = "caml_digestif_blake3_st_init_derive_key"
+    [@@noalloc]
+
+    external update : ctx -> st -> off -> size -> unit
+      = "caml_digestif_blake3_st_update"
+    [@@noalloc]
+
+    external finalize : ctx -> st -> off -> unit
+      = "caml_digestif_blake3_st_finalize"
+    [@@noalloc]
+
+    external finalize_seek : ctx -> int64 -> st -> off -> size -> unit
+      = "caml_digestif_blake3_st_finalize_seek"
+    [@@noalloc]
+  end
+
+  external ctx_size : unit -> int = "caml_digestif_blake3_ctx_size" [@@noalloc]
+end
+
 module RMD160 = struct
   type kind = [ `RMD160 ]
 
@@ -715,7 +756,7 @@ module XOR = struct
     [@@noalloc]
 
     let xor_into a b n =
-      if n > imin (Bi.length a) (Bi.length b)
+      if n < 0 || n > imin (Bi.length a) (Bi.length b)
       then
         raise (Invalid_argument "Native.Bigstring.xor_into: buffers to small")
       else xor_into a 0 b 0 n
@@ -733,7 +774,7 @@ module XOR = struct
     [@@noalloc]
 
     let xor_into a b n =
-      if n > imin (By.length a) (By.length b)
+      if n < 0 || n > imin (By.length a) (By.length b)
       then
         raise (Invalid_argument "Native.Bigstring.xor_into: buffers to small")
       else xor_into a 0 b 0 n

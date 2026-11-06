@@ -105,7 +105,7 @@ static void sha3_keccakf(uint64_t st[25])
 
 // Initialize the context for SHA3
 
-void digestif_sha3_init(struct sha3_ctx *ctx, int mdlen)
+void digestif_sha3_init(sha3_ctx *ctx, int mdlen)
 {
     int i;
     for (i = 0; i < 25; i++)
@@ -119,7 +119,7 @@ void digestif_sha3_init(struct sha3_ctx *ctx, int mdlen)
 
 // update state with more data
 
-void digestif_sha3_update(struct sha3_ctx *ctx, uint8_t *data, uint32_t len)
+void digestif_sha3_update(sha3_ctx *ctx, uint8_t *data, uint32_t len)
 {
     uint32_t i;
     int j;
@@ -147,7 +147,7 @@ void digestif_sha3_update(struct sha3_ctx *ctx, uint8_t *data, uint32_t len)
 // uint32_t would silently truncate a squeeze of 4 GiB or more, which is the
 // same shape of bug as CVE-2022-37454.
 
-void digestif_sha3_xof(struct sha3_ctx *ctx, uint8_t padding)
+void digestif_sha3_xof(sha3_ctx *ctx, uint8_t padding)
 {
     ctx->st.b[ctx->pt] ^= padding;
     ctx->st.b[ctx->rsiz - 1] ^= 0x80;
@@ -155,7 +155,7 @@ void digestif_sha3_xof(struct sha3_ctx *ctx, uint8_t padding)
     ctx->pt = 0;
 }
 
-void digestif_sha3_out(struct sha3_ctx *ctx, uint8_t *out, size_t len)
+void digestif_sha3_out(sha3_ctx *ctx, uint8_t *out, size_t len)
 {
     size_t i;
     int j;
@@ -175,7 +175,7 @@ void digestif_sha3_out(struct sha3_ctx *ctx, uint8_t *out, size_t len)
 
 // finalize and output a hash
 
-void digestif_sha3_finalize(struct sha3_ctx *ctx, uint8_t *md, uint8_t padding)
+void digestif_sha3_finalize(sha3_ctx *ctx, uint8_t *md, uint8_t padding)
 {
     int i;
 
