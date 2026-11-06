@@ -1,4 +1,9 @@
-## Unreleased (Reuna)
+## v1.4.1+reuna1 (Reuna, unreleased)
+
+Upstream v1.4.1 plus the Reuna additions below.  The `+reuna1` label orders
+this above upstream's `1.4.1` and below any later upstream release, which is
+what opam needs to see for a fork carrying 1.4.1 and more; `1.4.1~...` would
+order below upstream's 1.4.1 and fail `digestif >= 1.4.1`.
 
 - Add digestif.keccak-f1600: an in-place, 200-byte raw permutation API
   reusing the C SHA-3 kernel for duplex protocols.
